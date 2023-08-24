@@ -128,17 +128,10 @@ class _HomePageState extends State<HomePage> {
                       if (fase && personas != 0 && propina != 0) {
                         cuenta = double.parse(cuentaController.text);
                         propinaResult = propinaFn(cuenta, propina, personas);
-                        setState(() {
-                          fase = !fase;
-                        });
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content:
-                                const Text('Los valores deben ser mayores a 0'),
-                          ),
-                        );
                       }
+                      setState(() {
+                        fase = !fase;
+                      });
                     },
                     child: Container(
                       width: 62,
@@ -178,12 +171,6 @@ class _HomePageState extends State<HomePage> {
                   setState(() {
                     propinaResult = propinaFn(cuenta, propina, personas);
                   });
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: const Text('Los valores deben ser mayores a 0'),
-                    ),
-                  );
                 }
               },
             ),
@@ -206,12 +193,6 @@ class _HomePageState extends State<HomePage> {
                   setState(() {
                     propinaResult = propinaFn(cuenta, propina, personas);
                   });
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: const Text('Los valores deben ser mayores a 0'),
-                    ),
-                  );
                 }
               },
             ),
