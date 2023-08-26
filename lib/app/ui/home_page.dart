@@ -1,5 +1,6 @@
 import 'package:calcula_propina/app/ui/widgets/cuenta_field.dart';
 import 'package:calcula_propina/app/ui/widgets/icon_action.dart';
+import 'package:calcula_propina/app/ui/widgets/propina_result.dart';
 import 'package:flutter/material.dart';
 
 part 'home_fn.dart';
@@ -48,37 +49,8 @@ class _HomePageState extends State<HomePage> {
                       bottomRight: Radius.elliptical(32, 24),
                     ),
                   ),
-                  child: !fase
+                  child: fase
                       ? Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text(
-                              "Debes dar propina",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                              ),
-                            ),
-                            Text(
-                              propinaResult,
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 42,
-                              ),
-                            ),
-                            const Text(
-                              "por persona",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 8,
-                              ),
-                            ),
-                          ],
-                        )
-                      : Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             const Text(
@@ -96,22 +68,24 @@ class _HomePageState extends State<HomePage> {
                               child: CuentaField(controller: cuentaController),
                             ),
                           ],
-                        ),
+                        )
+                      : PropinaResult(propinaResult: propinaResult),
                 ),
                 Positioned(
                   bottom: 3,
                   left: (MediaQuery.of(context).size.width / 2) - 31,
                   child: GestureDetector(
-                      onTap: () {
-                        if (fase && personas != 0 && propina != 0) {
-                          cuenta = double.parse(cuentaController.text);
-                          propinaResult = propinaFn(cuenta, propina, personas);
-                        }
-                        setState(() {
-                          fase = !fase;
-                        });
-                      },
-                      child: IconAction(fase: fase)),
+                    onTap: () {
+                      if (fase && personas != 0 && propina != 0) {
+                        cuenta = double.parse(cuentaController.text);
+                        propinaResult = propinaFn(cuenta, propina, personas);
+                      }
+                      setState(() {
+                        fase = !fase;
+                      });
+                    },
+                    child: IconAction(fase: fase),
+                  ),
                 ),
               ],
             ),
