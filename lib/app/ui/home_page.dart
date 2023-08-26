@@ -1,7 +1,8 @@
-import 'package:calcula_propina/app/ui/functions/propina_fn.dart';
 import 'package:calcula_propina/app/ui/widgets/cuenta_field.dart';
 import 'package:calcula_propina/app/ui/widgets/icon_action.dart';
 import 'package:flutter/material.dart';
+
+part 'home_fn.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
