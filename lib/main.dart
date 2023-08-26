@@ -12,10 +12,12 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-          useMaterial3: true,
-          textSelectionTheme: TextSelectionThemeData(cursorColor: Colors.brown),
-          colorSchemeSeed: Colors.brown),
-      home: Scaffold(
+        useMaterial3: true,
+        textSelectionTheme:
+            const TextSelectionThemeData(cursorColor: Colors.brown),
+        colorSchemeSeed: Colors.brown,
+      ),
+      home: const Scaffold(
         body: HomePage(),
       ),
     );
