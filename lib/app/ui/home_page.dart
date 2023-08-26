@@ -1,4 +1,4 @@
-import 'package:calcula_propina/app/ui/fn.dart';
+import 'package:calcula_propina/app/ui/functions/propina_fn.dart';
 import 'package:calcula_propina/app/ui/widgets/cuenta_field.dart';
 import 'package:calcula_propina/app/ui/widgets/icon_action.dart';
 import 'package:flutter/material.dart';
@@ -127,13 +127,12 @@ class _HomePageState extends State<HomePage> {
               onChanged: (value) {
                 setState(() {
                   propina = value;
-                });
-                if (!fase && personas != 0 && propina != 0) {
-                  cuenta = double.parse(cuentaController.text);
-                  setState(() {
+
+                  if (!fase && personas != 0 && propina != 0) {
+                    cuenta = double.parse(cuentaController.text);
                     propinaResult = propinaFn(cuenta, propina, personas);
-                  });
-                }
+                  }
+                });
               },
             ),
             const SizedBox(height: 20),
@@ -149,14 +148,22 @@ class _HomePageState extends State<HomePage> {
               onChanged: (value) {
                 setState(() {
                   personas = value;
-                });
-                if (!fase && personas != 0 && propina != 0) {
-                  cuenta = double.parse(cuentaController.text);
-                  setState(() {
+
+                  if (!fase && personas != 0 && propina != 0) {
+                    cuenta = double.parse(cuentaController.text);
                     propinaResult = propinaFn(cuenta, propina, personas);
-                  });
-                }
+                  }
+                });
               },
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 30),
+              child: Center(
+                child: Image.asset(
+                  "assets/images/tipsjar.png",
+                  height: 200,
+                ),
+              ),
             ),
           ],
         ),
