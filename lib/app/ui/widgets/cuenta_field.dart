@@ -1,10 +1,18 @@
+import 'package:easy_mask/easy_mask.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class CuentaField extends StatelessWidget {
   final TextEditingController controller;
-  const CuentaField({super.key, required this.controller});
+  CuentaField({super.key, required this.controller});
 
+  final cuentaMonto = TextInputMask(
+    mask: '9+.99',
+    placeholder: '0',
+    maxPlaceHolders: -1,
+    maxLength: -1,
+    reverse: true,
+  );
   @override
   Widget build(BuildContext context) {
     return TextField(
@@ -18,7 +26,10 @@ class CuentaField extends StatelessWidget {
       textAlign: TextAlign.center,
       textAlignVertical: TextAlignVertical.center,
       keyboardType: TextInputType.number,
-      inputFormatters: [LengthLimitingTextInputFormatter(9)],
+      inputFormatters: [
+        cuentaMonto,
+        LengthLimitingTextInputFormatter(8),
+      ],
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 16,
