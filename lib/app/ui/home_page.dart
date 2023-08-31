@@ -24,123 +24,126 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Stack(
-              children: [
-                Container(height: 210),
-                Container(
-                  padding: const EdgeInsets.only(left: 16, right: 16),
-                  height: 180,
-                  width: double.maxFinite,
-                  decoration: BoxDecoration(
-                    color: Colors.brown,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.25),
-                        spreadRadius: 2,
-                        blurRadius: 4,
-                        offset: const Offset(0, 4),
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Stack(
+                children: [
+                  Container(height: 210),
+                  Container(
+                    padding: const EdgeInsets.only(left: 16, right: 16),
+                    height: 180,
+                    width: double.maxFinite,
+                    decoration: BoxDecoration(
+                      color: Colors.brown,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.25),
+                          spreadRadius: 2,
+                          blurRadius: 4,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
+                      borderRadius: const BorderRadius.only(
+                        bottomLeft: Radius.elliptical(32, 24),
+                        bottomRight: Radius.elliptical(32, 24),
                       ),
-                    ],
-                    borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.elliptical(32, 24),
-                      bottomRight: Radius.elliptical(32, 24),
+                    ),
+                    child: fase
+                        ? Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Text(
+                                "¿Cuánto es la cuenta?",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                ),
+                              ),
+                              // SizedBox(height: 24),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 52),
+                                child:
+                                    CuentaField(controller: cuentaController),
+                              ),
+                            ],
+                          )
+                        : PropinaResult(propinaResult: propinaResult),
+                  ),
+                  Positioned(
+                    bottom: 3,
+                    left: (MediaQuery.of(context).size.width / 2) - 31,
+                    child: GestureDetector(
+                      onTap: () {
+                        if (fase && personas != 0 && propina != 0) {
+                          cuenta = double.parse(cuentaController.text);
+                          propinaResult = propinaFn(cuenta, propina, personas);
+                        }
+                        setState(() {
+                          fase = !fase;
+                        });
+                      },
+                      child: IconAction(fase: fase),
                     ),
                   ),
-                  child: fase
-                      ? Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text(
-                              "¿Cuánto es la cuenta?",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                              ),
-                            ),
-                            // SizedBox(height: 24),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 52),
-                              child: CuentaField(controller: cuentaController),
-                            ),
-                          ],
-                        )
-                      : PropinaResult(propinaResult: propinaResult),
-                ),
-                Positioned(
-                  bottom: 3,
-                  left: (MediaQuery.of(context).size.width / 2) - 31,
-                  child: GestureDetector(
-                    onTap: () {
-                      if (fase && personas != 0 && propina != 0) {
-                        cuenta = double.parse(cuentaController.text);
-                        propinaResult = propinaFn(cuenta, propina, personas);
-                      }
-                      setState(() {
-                        fase = !fase;
-                      });
-                    },
-                    child: IconAction(fase: fase),
+                ],
+              ),
+              const SizedBox(height: 20),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 18),
+                child: Text("Propina %"),
+              ),
+              Slider(
+                value: propina,
+                max: 20,
+                divisions: 20,
+                label: "${propina.toStringAsFixed(0)}%",
+                onChanged: (value) {
+                  setState(() {
+                    propina = value;
+
+                    if (!fase && personas != 0 && propina != 0) {
+                      cuenta = double.parse(cuentaController.text);
+                      propinaResult = propinaFn(cuenta, propina, personas);
+                    }
+                  });
+                },
+              ),
+              const SizedBox(height: 20),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 18),
+                child: Text("Personas"),
+              ),
+              Slider(
+                value: personas,
+                max: 20,
+                divisions: 20,
+                label: personas.toStringAsFixed(0),
+                onChanged: (value) {
+                  setState(() {
+                    personas = value;
+
+                    if (!fase && personas != 0 && propina != 0) {
+                      cuenta = double.parse(cuentaController.text);
+                      propinaResult = propinaFn(cuenta, propina, personas);
+                    }
+                  });
+                },
+              ),
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 30),
+                child: Center(
+                  child: Image.asset(
+                    "assets/images/tipsjar.png",
+                    height: 200,
                   ),
                 ),
-              ],
-            ),
-            const SizedBox(height: 20),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 18),
-              child: Text("Propina %"),
-            ),
-            Slider(
-              value: propina,
-              max: 20,
-              divisions: 20,
-              label: "${propina.toStringAsFixed(0)}%",
-              onChanged: (value) {
-                setState(() {
-                  propina = value;
-
-                  if (!fase && personas != 0 && propina != 0) {
-                    cuenta = double.parse(cuentaController.text);
-                    propinaResult = propinaFn(cuenta, propina, personas);
-                  }
-                });
-              },
-            ),
-            const SizedBox(height: 20),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 18),
-              child: Text("Personas"),
-            ),
-            Slider(
-              value: personas,
-              max: 20,
-              divisions: 20,
-              label: personas.toStringAsFixed(0),
-              onChanged: (value) {
-                setState(() {
-                  personas = value;
-
-                  if (!fase && personas != 0 && propina != 0) {
-                    cuenta = double.parse(cuentaController.text);
-                    propinaResult = propinaFn(cuenta, propina, personas);
-                  }
-                });
-              },
-            ),
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 30),
-              child: Center(
-                child: Image.asset(
-                  "assets/images/tipsjar.png",
-                  height: 200,
-                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
